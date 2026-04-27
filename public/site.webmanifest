@@ -1,0 +1,17 @@
+{
+  "name": "Feiçall Toke Sounon",
+  "short_name": "FDEV",
+  "description": "Portfolio de Feiçall Toke Sounon, développeur web full stack et référenceur SEO au Bénin.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090b12",
+  "theme_color": "#090b12",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
