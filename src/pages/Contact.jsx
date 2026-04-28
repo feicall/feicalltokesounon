@@ -6,6 +6,9 @@ import { pageMeta } from "../components/seo/pageMeta";
 
 const GOOGLE_FORM_WIDTH = 800;
 const GOOGLE_FORM_HEIGHT = 820;
+const GOOGLE_FORM_BREAKPOINT = 768;
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeInoWl0tDqcVR0PjXYee3W6_U4Pb437zPTKdQxUkotxdUfXw/viewform";
+const GOOGLE_FORM_EMBED_URL = `${GOOGLE_FORM_URL}?embedded=true`;
 
 const line = {
   hidden: { opacity: 0, y: 20 },
@@ -52,12 +55,17 @@ const Contact = () => {
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState({ type: "", message: "" });
   const [googleFormScale, setGoogleFormScale] = useState(1);
+  const [showEmbeddedGoogleForm, setShowEmbeddedGoogleForm] = useState(true);
   const [email, setEmail] = useState("");
   const [emailTouched, setEmailTouched] = useState(false);
 
   useEffect(() => {
     const updateGoogleFormScale = () => {
-      if (!googleFormRef.current) {
+      const isDesktopLayout = window.innerWidth >= GOOGLE_FORM_BREAKPOINT;
+      setShowEmbeddedGoogleForm(isDesktopLayout);
+
+      if (!googleFormRef.current || !isDesktopLayout) {
+        setGoogleFormScale(1);
         return;
       }
 
@@ -176,7 +184,6 @@ const Contact = () => {
                 viewport={{ once: true, amount: 0.25 }}
                 className="mb-10"
               >
-              
                 <motion.h3
                   variants={fieldMotion}
                   className="mt-6 text-3xl font-semibold leading-tight tracking-[-0.04em] text-white md:text-4xl"
@@ -304,26 +311,43 @@ const Contact = () => {
           </div>
 
           <div ref={googleFormRef} className="mx-auto w-full">
-            <div
-              className="mx-auto overflow-hidden rounded-2xl border border-white/8 bg-slate-950/30"
-              style={{
-                maxWidth: `${GOOGLE_FORM_WIDTH}px`,
-                height: `${GOOGLE_FORM_HEIGHT * googleFormScale}px`,
-              }}
-            >
-              <iframe
-                src="https://docs.google.com/forms/d/e/1FAIpQLSeInoWl0tDqcVR0PjXYee3W6_U4Pb437zPTKdQxUkotxdUfXw/viewform?embedded=true"
-                title="Brief projet détaillé"
-                className="block origin-top-left overflow-hidden rounded-2xl bg-slate-950/40"
-                style={{
-                  width: `${GOOGLE_FORM_WIDTH}px`,
-                  height: `${GOOGLE_FORM_HEIGHT}px`,
-                  transform: `scale(${googleFormScale})`,
-                }}
-                loading="lazy"
-              >
-                Chargement...
-              </iframe>
+            <div className="mx-auto max-w-[800px]">
+              {showEmbeddedGoogleForm ? (
+                <div
+                  className="mx-auto overflow-hidden rounded-2xl border border-white/8 bg-slate-950/30"
+                  style={{
+                    maxWidth: `${GOOGLE_FORM_WIDTH}px`,
+                    height: `${GOOGLE_FORM_HEIGHT * googleFormScale}px`,
+                  }}
+                >
+                  <iframe
+                    src={GOOGLE_FORM_EMBED_URL}
+                    title="Brief projet détaillé"
+                    className="block origin-top-left overflow-hidden rounded-2xl bg-slate-950/40"
+                    style={{
+                      width: `${GOOGLE_FORM_WIDTH}px`,
+                      height: `${GOOGLE_FORM_HEIGHT}px`,
+                      transform: `scale(${googleFormScale})`,
+                    }}
+                    loading="lazy"
+                  >
+                    Chargement...
+                  </iframe>
+                </div>
+              ) : (
+                <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.92),rgba(9,11,18,0.98))] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.34)]">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                    <a
+                      href={GOOGLE_FORM_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-500 to-blue-500 px-5 py-4 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(59,130,246,0.24)] transition hover:brightness-110"
+                    >
+                      Ouvrir le formulaire
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
