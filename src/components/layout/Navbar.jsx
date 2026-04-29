@@ -134,23 +134,28 @@ export default function Navbar() {
                             onClick={() => setMobileOpen((open) => !open)}
                             className="rounded-xl border border-white/10 bg-white/5 p-2.5 text-white transition-colors hover:bg-white/10"
                         >
-                            <span className="relative block h-5 w-5">
-                                <span
-                                    className={`absolute left-0 top-0 h-[1.5px] w-5 rounded-full bg-current transition-all duration-300 ${
-                                        mobileOpen ? "top-2 rotate-45" : ""
-                                    }`}
-                                />
-                                <span
-                                    className={`absolute left-0 top-2 h-[1.5px] w-5 rounded-full bg-current transition-all duration-300 ${
-                                        mobileOpen ? "opacity-0" : ""
-                                    }`}
-                                />
-                                <span
-                                    className={`absolute left-0 top-4 h-[1.5px] w-5 rounded-full bg-current transition-all duration-300 ${
-                                        mobileOpen ? "top-2 -rotate-45" : ""
-                                    }`}
-                                />
-                            </span>
+                            {mobileOpen ? (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                            ) : (
+                                <span className="relative block h-5 w-5">
+                                    <span className="absolute left-0 top-0 h-[1.5px] w-5 rounded-full bg-current" />
+                                    <span className="absolute left-0 top-[9px] h-[1.5px] w-5 rounded-full bg-current" />
+                                    <span className="absolute left-0 bottom-0 h-[1.5px] w-5 rounded-full bg-current" />
+                                </span>
+                            )}
                         </button>
                     </div>
                 </div>
@@ -179,31 +184,10 @@ export default function Navbar() {
                         >
                             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.12),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent)]" />
 
-                            <div className="relative mb-4 flex items-center justify-between">
+                            <div className="relative mb-4">
                                 <p className="text-sm font-medium tracking-[-0.03em] text-slate-500">
                                     {content.brand}
                                 </p>
-                                <button
-                                    type="button"
-                                    aria-label={content.mobileClose}
-                                    onClick={() => setMobileOpen(false)}
-                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M18 6 6 18" />
-                                        <path d="m6 6 12 12" />
-                                    </svg>
-                                </button>
                             </div>
 
                             <div className="relative rounded-[0.9rem] border border-white/6 bg-[#171717] px-4 py-3">
